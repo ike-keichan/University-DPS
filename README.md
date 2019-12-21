@@ -22,9 +22,10 @@ JavaのThreadの練習に用いたプログラム。
 課題3「駐車場を模倣したプログラムの作成。車の入退出、駐車数を並列的にカウントし、駐車台数が満タンになったときに車が入場しないように制御せよ」
 ※Apache Antを用いている。
 
-### PhilosopherWithSimulator
+### PhilosopherWithSimulator/PhilosopherForClassDiagram
 課題4「哲学者問題を模倣したプログラムの作成。デッドロックを自分なりに回避せよ」
-※シュミレータを用いている。
+※PhilosopherWithSimulatorはシュミレータを用いている。
+※PhilosopherForClassDiagramはApache Antを用いている。
 
 ## 実行方法
 ### Apache Ant
