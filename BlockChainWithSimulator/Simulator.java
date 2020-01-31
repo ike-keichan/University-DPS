@@ -11,7 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-public class Simulator{
+public class Simulator {
 	/* global variables */
 
 	/**
@@ -28,6 +28,7 @@ public class Simulator{
 	* 時間計測用フラグ
 	*/
 	Boolean measure = false;
+
 	
 	public static void main(String[] args){
 		Simulator sim = new Simulator();
