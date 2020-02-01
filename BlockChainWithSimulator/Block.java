@@ -68,11 +68,11 @@ public class Block extends Object
 
     /**
      * Set a sequence number of a block.
-     * @param bnum a seq. number to be set.
+     * @param blockNum a seq. number to be set.
      */
-    public void setBlockNum(Integer bnum)
+    public void setBlockNum(Integer blockNum)
     {
-        this.blockNum = bnum;
+        this.blockNum = blockNum;
 
         return;
     }

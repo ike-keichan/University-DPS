@@ -26,14 +26,14 @@ class Miner extends Object
 
     /**
      * Constructor
-     * @param block is the current latest block.
-     * @param diffbits is the current difficulty bits.
+     * @param aBlock is the current latest block.
+     * @param difficultyBits is the current difficulty bits.
      */
-    Miner(Block block, Integer diffbits)
+    Miner(Block aBlock, Integer difficultyBits)
     {
-        this.difficultyBits = diffbits;
+        this.difficultyBits = difficultyBits;
         this.target = this.generatingTarget(this.difficultyBits);
-        this.latestBlock = block;
+        this.latestBlock = aBlock;
 
         return;
     }
@@ -59,16 +59,16 @@ class Miner extends Object
 
     /**
      * Creates a digest string from a block.
-     * @param block is the block to generate hash values by using its block header.
+     * @param aBlock is the block to generate hash values by using its block header.
      * @return Return a digest string as {@code String}.
      */
-    public static String createDigest(Block block)
+    public static String createDigest(Block aBlock)
     {
-        String digest = Integer.toString(block.getBlockNum())
-        + Long.toString(block.getNonce())
-        + block.getPrevHash().toString()
-        + block.getOwnHash().toString()
-        + block.getTimestamp();
+        String digest = Integer.toString(aBlock.getBlockNum())
+        + Long.toString(aBlock.getNonce())
+        + aBlock.getPrevHash().toString()
+        + aBlock.getOwnHash().toString()
+        + aBlock.getTimestamp();
 
         return digest;
     }
@@ -77,24 +77,24 @@ class Miner extends Object
      * Sets new block as the latest block.
      * @param block is the current latest block.
      */
-    public void setBlock(Block block)
+    public void setBlock(Block aBlock)
     {
         if(this.latestBlock == null)
-            this.latestBlock = block;
+            this.latestBlock = aBlock;
 
-        if(this.latestBlock.getBlockNum() < block.getBlockNum())
-            this.latestBlock = block;
+        if(this.latestBlock.getBlockNum() < aBlock.getBlockNum())
+            this.latestBlock = aBlock;
 
         return;
     }
 
     /**
      * Updates the latest block.
-     * @param block is the block set as the latest block.
+     * @param aBlock is the block set as the latest block.
      */
-    public void updateBlock(Block block)
+    public void updateBlock(Block aBlock)
     {
-        setBlock(block);
+        setBlock(aBlock);
 
         return;
     }
@@ -211,14 +211,14 @@ class Miner extends Object
     /**
      * Generates a target for mining.
      * The value should be the block hash if it is smaller than the target.
-     * @param diffbits is the difficulty bits to generate the corresponding target.
+     * @param difficultyBits is the difficulty bits to generate the corresponding target.
      * @return Return the generated criterion of mining as {@code BigInteger}.
      */
-    public static BigInteger generatingTarget(Integer diffbits)
+    public static BigInteger generatingTarget(Integer difficultyBits)
     {
         BigInteger new_target = BigInteger.valueOf(2);
-        new_target = new_target.pow(256-diffbits); // target should be 2^(256-diffbits)
-        //		System.out.println("New target: " + tgt.toString(16) + " diffbits: " + diffbits);
+        new_target = new_target.pow(256-difficultyBits); // target should be 2^(256-difficultyBits)
+        //		System.out.println("New target: " + tgt.toString(16) + " difficultyBits: " + difficultyBits);
 
         return new_target;
     }
@@ -237,14 +237,14 @@ class Miner extends Object
      * @param block is the current latest block in the chain.
      * @return Return a list of {@link Result} including mined hash values and nonce values.
      */
-    private ArrayList<Result> mining(Block block) {
+    private ArrayList<Result> mining(Block aBlock) {
         ArrayList<Result> results = new ArrayList<Result>();
-        String digest = this.createDigest(block);
+        String digest = this.createDigest(aBlock);
         String result_string = null;
         BigInteger result;
         //long l_target = Math.pow(2, 256-this.difficultyBits);
 
-        for(int count = 0; count < this.maxMiningValues; count++) {
+        for(Integer count = 0; count < this.maxMiningValues; count++) {
             result_string = this.createHashedDigest(digest, nonce);
             result = new BigInteger(result_string, 16);
             results.add(new Result(result,nonce,getDifficultyBits()));
