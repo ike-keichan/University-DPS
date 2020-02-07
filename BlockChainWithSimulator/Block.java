@@ -53,7 +53,6 @@ public class Block extends Object
         this.prevHash = prevHash;
         this.ownHash = ownHash;
         this.timestamp = ts;
-
         return;
     }
 

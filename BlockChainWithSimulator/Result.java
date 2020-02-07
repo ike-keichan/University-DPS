@@ -25,7 +25,7 @@ public class Result extends Object
     private Integer difficultyBits;
 
     /**
-     * 
+     *
      * @param r
      * @param n
      * @param d
