@@ -1,9 +1,8 @@
-
 /**
 * This class is the implementation of the mining node.
 * It also plays a role of the full blockchain node.
 *
-* @author Naohiro Hayashibara
+* @author Naohiro Hayashibara & update: Keisuke Ikeda
 *
 */
 
@@ -121,9 +120,8 @@ public class MiningNode extends Process
 
                 if (receiverBlock != null) {
                     if (this.validateBlock(receiverBlock)) {
-                        // receiverBlock.getPrevHash();
-                        for (int i = 0; i < blockChain.size(); i++) {
-                            if (blockChain.get(i).getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
+                        for (int index = 0; index < blockChain.size(); index++) {
+                            if (blockChain.get(index).getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
                                 this.addBlockToChain(receiverBlock, this.blockChain);
                             }
                         }
@@ -156,9 +154,10 @@ public class MiningNode extends Process
         }
         // the procedure of processes except Process 0.
         else{
-            Object c;
             Block newBlock = null;
             Miner miner = null; // create a miner.
+
+            /* 実装部分　*/
 
             while(miner == null){
                 miner = this.receiveMiner();
@@ -184,6 +183,8 @@ public class MiningNode extends Process
                     (c) そのBlockのprevHashをもつBlockの後ろに配置
                 */
 
+                /* 実装部分　*/
+
                 ArrayList<Result> hash = miner.getHashValues();
 
                 Result checkHash = this.checkHashValues(hash);
@@ -201,14 +202,8 @@ public class MiningNode extends Process
 
                 if (receiverBlock != null) {
                     if (this.validateBlock(receiverBlock)) {
-                        // receiverBlock.getPrevHash();
-                        // this.blockChain.forEach(aBlock -> {
-                        //     if (aBlock.getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
-                        //         this.addBlockToChain(receiverBlock, this.blockChain);
-                        //     }
-                        // });
-                        for (int i = 0; i < blockChain.size(); i++) {
-                            if (blockChain.get(i).getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
+                        for (int index = 0; index < blockChain.size(); index++) {
+                            if (blockChain.get(index).getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
                                 this.addBlockToChain(receiverBlock, this.blockChain);
                             }
                         }
@@ -349,15 +344,12 @@ public class MiningNode extends Process
          */
         /* 実装部分　*/
         Data data = new Data("Happy!!");
-        Block lastBlock;
+        Block lastBlock = blockChain.stream()
+                                    .max((l, r) -> -1)
+                                    .get();
 
-        // lastBlock = blockChain.stream()
-        // .max((l, r) -> -1)
-        // .get();
-
-        lastBlock = blockChain.get(blockChain.size() -1);
-
-        Block newBlock = new Block(lastBlock.getBlockNum() + 1,
+        Block newBlock = new Block(
+            lastBlock.getBlockNum() + 1,
             result.getDifficultyBits(),
             result.getNonce(),
             data,

@@ -1,7 +1,7 @@
 /**
 * This class is for receiving hash values and nonce values.
 *
-* @author Naohiro Hayashibara
+* @author Naohiro Hayashibara & update: Keisuke Ikeda
 *
 */
 

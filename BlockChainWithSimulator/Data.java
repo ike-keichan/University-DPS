@@ -1,7 +1,7 @@
 /**
 * This class is the implementation of data that is included in a block.
 *
-* @author Naohiro Hayashibara
+* @author Naohiro Hayashibara & update: Keisuke Ikeda
 *
 */
 

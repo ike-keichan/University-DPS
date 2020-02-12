@@ -3,7 +3,7 @@
 * This class is for mining hash values.
 * Once created a mining object, it should be shared among processes.
 *
-* @author Naohiro Hayashibara
+* @author Naohiro Hayashibara & update: Keisuke Ikeda
 *
 */
 

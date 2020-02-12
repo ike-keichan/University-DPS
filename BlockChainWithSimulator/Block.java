@@ -2,7 +2,7 @@
 * This class is the implementation of a block.
 * The blockchain is represented as a list of blocks.
 *
-* @author Naohiro Hayashibara
+* @author Naohiro Hayashibara & update: Keisuke Ikeda
 *
 */
 

@@ -1,7 +1,7 @@
 /**
 * This class is for outputting the hash values of blocks in the chain at the process 0 in CSV format.
 *
-* @author Naohiro Hayashibara
+* @author Naohiro Hayashibara & update: Keisuke Ikeda
 *
 */
 
