@@ -19,7 +19,7 @@ public class Block extends Object
     private Long nonce = -1L;
     private BigInteger prevHash = null;
     private BigInteger ownHash = null;
-    private String timestamp = null; // TODO: to be Date instead of String
+    private String timestamp = null;
 
     /**
      * Block content

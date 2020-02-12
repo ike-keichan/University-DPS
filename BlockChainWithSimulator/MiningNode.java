@@ -25,7 +25,7 @@ public class MiningNode extends Process
     /**
      * The difficulty bits.
      */
-    private Integer difficultyBits = 10;
+    final private Integer difficultyBits = 8;
 
     /**
      * The initial block of the chain.
@@ -40,17 +40,12 @@ public class MiningNode extends Process
     /**
      * The limit of the size of the blockchain.
      */
-    private Integer maxSize = 5;
+    final private Integer maxSize = 5;
 
     /**
      * Debug output mode if it is true.
      */
-    private Boolean debug = false;
-
-    /**
-     * 
-     */
-    private Miner aMiner = null;
+    private Boolean debug = true;
 
     /**
      * The constructor of the class {@link MiningNode}.
@@ -77,7 +72,9 @@ public class MiningNode extends Process
         // the procedure of Process 0.
         if (this.id == 0) {
             Data data = new Data("This is the first block in the chain.");
+
             this.initialBlock = new Block(1, 1, 0L, data, new BigInteger("0", 16), new BigInteger("0", 16), Calendar.getInstance().getTime().toString());
+            
             Miner miner = new Miner(this.initialBlock, this.difficultyBits); // create a miner.
 
             this.initialBlock = miner.createInitialBlock(); // create an initial block of the chain.
@@ -124,19 +121,24 @@ public class MiningNode extends Process
 
                 if (receiverBlock != null) {
                     if (this.validateBlock(receiverBlock)) {
-                        receiverBlock.getPrevHash();
-                        this.blockChain.stream().forEach(block -> {
-                            if (block.getOwnHash().equals(receiverBlock.getPrevHash())) {
+                        // receiverBlock.getPrevHash();
+                        for (int i = 0; i < blockChain.size(); i++) {
+                            if (blockChain.get(i).getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
                                 this.addBlockToChain(receiverBlock, this.blockChain);
                             }
-                        });
+                        }
+                        // this.blockChain.forEach(aBlock -> {
+                        //     if (aBlock.getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
+                        //         this.addBlockToChain(receiverBlock, this.blockChain);
+                        //     }
+                        // });
                     }
                 }
 
                 /*
                 * 以下のyield()とsleep()は実行の公平性を保つために消さないように!
                 */
-                super.yield();
+                Thread.yield();
                 try{
                     Thread.sleep(1000);
                 }
@@ -155,10 +157,19 @@ public class MiningNode extends Process
         // the procedure of processes except Process 0.
         else{
             Object c;
-            Block newBlock;
-            Miner miner = getMiner(); // create a miner.
+            Block newBlock = null;
+            Miner miner = null; // create a miner.
 
-            while(blockChain.size() < maxSize){
+            while(miner == null){
+                miner = this.receiveMiner();
+            }
+
+            while(newBlock == null){
+                newBlock = this.receiveBlock();
+                this.addBlockToChain(newBlock, this.blockChain);
+            }
+
+            while(this.blockChain.size() < this.maxSize){
                 /*
                 ここで以下手順を記述する((1), (2)は順不同)．
                 (1) マイニングする
@@ -177,7 +188,7 @@ public class MiningNode extends Process
 
                 Result checkHash = this.checkHashValues(hash);
 
-                if(checkHash != null){
+                if((checkHash != null) && (this.blockChain.size() != 0)){
 
                     newBlock = this.createBlock(checkHash, this.blockChain);
 
@@ -190,20 +201,24 @@ public class MiningNode extends Process
 
                 if (receiverBlock != null) {
                     if (this.validateBlock(receiverBlock)) {
-                        receiverBlock.getPrevHash();
-                        this.blockChain.stream().forEach(block -> {
-                            if (block.getOwnHash().equals(receiverBlock.getPrevHash())) {
+                        // receiverBlock.getPrevHash();
+                        // this.blockChain.forEach(aBlock -> {
+                        //     if (aBlock.getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
+                        //         this.addBlockToChain(receiverBlock, this.blockChain);
+                        //     }
+                        // });
+                        for (int i = 0; i < blockChain.size(); i++) {
+                            if (blockChain.get(i).getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
                                 this.addBlockToChain(receiverBlock, this.blockChain);
                             }
-                        });
+                        }
                     }
                 }
-
 
                 /*
                 * 以下のyield()とsleep()は実行の公平性を保つために消さないように!
                 */
-                super.yield();
+                Thread.yield();
                 try{
                     Thread.sleep(1000);
                 }
@@ -236,8 +251,6 @@ public class MiningNode extends Process
             }
         }
 
-        this.aMiner = aMiner;
-
         return;
     }
 
@@ -262,6 +275,20 @@ public class MiningNode extends Process
         return;
     }
 
+    private Miner receiveMiner() {
+        Object c;
+        if ((c = receive()) != null) {
+            Miner aMiner = (Miner) ((Message) c).getContent();
+            // System.out.println("Proc. " + id + ": received a block of " + aBlock.getOwnHash().toString(16));
+
+            return aMiner;
+        } else {
+            // debugPrint("no message at " + id);
+
+            return null;
+        }
+    }
+
     /**
      * Receive a block
      *
@@ -275,7 +302,7 @@ public class MiningNode extends Process
 
             return aBlock;
         } else {
-            debugPrint("no message at " + id);
+            // debugPrint("no message at " + id);
 
             return null;
         }
@@ -322,7 +349,22 @@ public class MiningNode extends Process
          */
         /* 実装部分　*/
         Data data = new Data("Happy!!");
-        Block newBlock = new Block(blockChain.size() + 1, result.getDifficultyBits(), result.getNonce(), data, blockChain.get(blockChain.size() - 1).getOwnHash(), result.getHashValue(), Calendar.getInstance().getTime().toString());
+        Block lastBlock;
+
+        // lastBlock = blockChain.stream()
+        // .max((l, r) -> -1)
+        // .get();
+
+        lastBlock = blockChain.get(blockChain.size() -1);
+
+        Block newBlock = new Block(lastBlock.getBlockNum() + 1,
+            result.getDifficultyBits(),
+            result.getNonce(),
+            data,
+            lastBlock.getOwnHash(),
+            result.getHashValue(),
+            Calendar.getInstance().getTime().toString()
+        );
 
         return newBlock;
     }
@@ -409,15 +451,6 @@ public class MiningNode extends Process
         }
 
         return;
-    }
-
-    /**
-     * BlockChainに対応しているMinerの値を取得する。
-     * @return aMiner 対応するMiner
-     */
-    private Miner getMiner() {;
-
-        return this.aMiner;
     }
 
 }

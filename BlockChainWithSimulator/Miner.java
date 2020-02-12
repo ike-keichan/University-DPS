@@ -16,12 +16,39 @@ import org.apache.commons.codec.digest.DigestUtils;
 class Miner extends Object
 {
 
-    private Block latestBlock = null; // latest block in the chain.
-    private Integer hitCounter = 0; // Num. of mining results that match the target.
-    private Integer maxMiningValues = 100; // Num. of values return to each client.
-    private Integer difficultyBits = 1;	 // The difficulty bit.
+    /**
+     * latest block in the chain.
+     */
+    private Block latestBlock = null;
+
+    /**
+     * Num. of mining results that match the target.
+     */
+    private Integer hitCounter = 0;
+
+    /**
+     * Num. of values return to each client.
+     */
+    private Integer maxMiningValues = 100;
+
+    /**
+     * The difficulty bit.
+     */
+    private Integer difficultyBits = 1;
+
+    /**
+     * 
+     */
     private Long baseTarget = 2L;
+
+    /**
+     * 
+     */
     private Long nonce = 0L;
+
+    /**
+     * 
+     */
     private BigInteger target;
 
     /**
