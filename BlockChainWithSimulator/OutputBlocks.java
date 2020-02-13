@@ -40,11 +40,11 @@ public class OutputBlocks
     {
         final String filename = "process" + this.id + ".csv";
         try{
-            final File file = new File(filename);
-            final FileWriter fw = new FileWriter(file);
-            final BufferedWriter bw = new BufferedWriter(fw);
-            for(final Block block : blockChain) {
-                bw.write(block.getBlockNum() + "," + block.getPrevHash().toString(16) + "," + block.getOwnHash().toString(16));
+            File file = new File(filename);
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (int index = 0; index < this.blockChain.size(); index++) {
+                bw.write(this.blockChain.get(index).getBlockNum() + "," + this.blockChain.get(index).getPrevHash().toString(16) + "," + this.blockChain.get(index).getOwnHash().toString(16));
                 bw.newLine();
             }
             bw.close();
@@ -54,7 +54,6 @@ public class OutputBlocks
         }
 
         return;
-
     }
 
 }

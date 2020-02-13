@@ -24,7 +24,7 @@ public class MiningNode extends Process
     /**
      * The difficulty bits.
      */
-    final private Integer difficultyBits = 8;
+    final private Integer difficultyBits = 20;
 
     /**
      * The initial block of the chain.
@@ -44,7 +44,7 @@ public class MiningNode extends Process
     /**
      * Debug output mode if it is true.
      */
-    private Boolean debug = true;
+    private Boolean debug = false;
 
     /**
      * The constructor of the class {@link MiningNode}.
@@ -73,7 +73,7 @@ public class MiningNode extends Process
             Data data = new Data("This is the first block in the chain.");
 
             this.initialBlock = new Block(1, 1, 0L, data, new BigInteger("0", 16), new BigInteger("0", 16), Calendar.getInstance().getTime().toString());
-            
+
             Miner miner = new Miner(this.initialBlock, this.difficultyBits); // create a miner.
 
             this.initialBlock = miner.createInitialBlock(); // create an initial block of the chain.
@@ -125,11 +125,6 @@ public class MiningNode extends Process
                                 this.addBlockToChain(receiverBlock, this.blockChain);
                             }
                         }
-                        // this.blockChain.forEach(aBlock -> {
-                        //     if (aBlock.getOwnHash().compareTo(receiverBlock.getPrevHash()) == 0) {
-                        //         this.addBlockToChain(receiverBlock, this.blockChain);
-                        //     }
-                        // });
                     }
                 }
 
@@ -161,11 +156,18 @@ public class MiningNode extends Process
 
             while(miner == null){
                 miner = this.receiveMiner();
+                Thread.yield();
+                try{
+                    Thread.sleep(1000);
+                }
+                catch (final InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             }
 
             while(newBlock == null){
                 newBlock = this.receiveBlock();
-                this.addBlockToChain(newBlock, this.blockChain);
+                if(newBlock != null) this.addBlockToChain(newBlock, this.blockChain);
             }
 
             while(this.blockChain.size() < this.maxSize){
@@ -297,7 +299,7 @@ public class MiningNode extends Process
 
             return aBlock;
         } else {
-            // debugPrint("no message at " + id);
+            debugPrint("no message at " + id);
 
             return null;
         }
@@ -345,8 +347,8 @@ public class MiningNode extends Process
         /* 実装部分　*/
         Data data = new Data("Happy!!");
         Block lastBlock = blockChain.stream()
-                                    .max((l, r) -> -1)
-                                    .get();
+            .max((l, r) -> -1)
+            .get();
 
         Block newBlock = new Block(
             lastBlock.getBlockNum() + 1,
