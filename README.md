@@ -22,10 +22,16 @@ JavaのThreadの練習に用いたプログラム。
 課題3「駐車場を模倣したプログラムの作成。車の入退出、駐車数を並列的にカウントし、駐車台数が満タンになったときに車が入場しないように制御せよ」
 ※Apache Antを用いている。
 
-### PhilosopherWithSimulator/PhilosopherForClassDiagram
+### PhilosopherWithSimulator
 課題4「哲学者問題を模倣したプログラムの作成。デッドロックを自分なりに回避せよ」
 ※PhilosopherWithSimulatorはシュミレータを用いている。
-※PhilosopherForClassDiagramはApache Antを用いている。
+
+### BlockChainWithSimulator
+最終課題「ブロックチェーンプログラムの作成。実行時間を計測せよ。」
+※BlockChainWithSimulatorはシュミレータを用いている。
+
+### BlockChainReport
+最終課題のレポート。upLatexで作成。
 
 ## 実行方法
 ### Apache Ant
@@ -48,4 +54,10 @@ $make clean
 ```
 $javac *.java
 $java Simulator -c Philosopher -p 3
+```
+
+### シュミレータ（BlockChainWithSimulator）
+```
+$sh javac.sh *.java
+$sh java.sh Simulator -c Philosopher -p 3 -t
 ```
