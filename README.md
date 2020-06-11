@@ -1,4 +1,4 @@
-# University-DPS-Java
+# University-DPS
 
 ## status
 作成期間：2019.10~2020.1　3回生秋学期
