@@ -6,6 +6,37 @@
 ## about
 京都産業大学 コンピュータ理工学部 2019年度秋 開講の「分散処理システム」の課題を解いたプログラム。
 
+## Version
+### Java
+```
+$ (export JAVA_HOME=`/usr/libexec/java_home -v "14"` ; java -version ; javac -version)
+Picked up _JAVA_OPTIONS: -Dfile.encoding=UTF-8
+java version "14.0.1" 2020-04-14
+Java(TM) SE Runtime Environment (build 14.0.1+7)
+Java HotSpot(TM) 64-Bit Server VM (build 14.0.1+7, mixed mode, sharing)
+Picked up _JAVA_OPTIONS: -Dfile.encoding=UTF-8
+javac 14.0.1
+```
+
+### Apache Ant
+```
+$ ant -version
+Picked up _JAVA_OPTIONS: -Dfile.encoding=UTF-8
+Apache Ant(TM) version 1.10.8 compiled on May 10 2020
+```
+
+### Make
+```
+$ make --version
+GNU Make 3.81
+Copyright (C) 2006  Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+
+This program built for i386-apple-darwin11.3.0
+```
+
 ## program
 ### Ltsa
 授業で作成したltsaファイル。
