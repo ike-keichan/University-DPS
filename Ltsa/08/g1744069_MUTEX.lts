@@ -1,0 +1,13 @@
+const Max = 3 
+range R = 0..Max
+
+SEMAPHORE(N = 0) = SEM[N],
+SEM[v: R] = ( when(v < Max) up -> SEM[v+1] 
+            | when(v > 0) down -> SEM[v-1]).
+
+ 
+LOOP = (mutex.down -> critical -> mutex.up -> LOOP).
+||MUTEXDEMO = (p[1..3]:LOOP 
+              || {p[1..3]}::mutex:SEMAPHORE(1)).
+ 
+ 

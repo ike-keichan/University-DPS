@@ -1,0 +1,2 @@
+WRITER = (writer[0] -> writer[3] -> WRITER) + {writer[0 .. 3]}.
+ 

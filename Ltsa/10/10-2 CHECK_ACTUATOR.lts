@@ -1,0 +1,8 @@
+ACTUATOR = (command->ACTION), 
+ACTION =(respond->ACTUATOR  
+| command ->ACTUATOR).
+property SAFE_ACTUATOR = (command->respond->SAFE_ACTUATOR).
+||CHECK_ACTUATOR =  
+(ACTUATOR || SAFE_ACTUATOR).
+ 
+ 

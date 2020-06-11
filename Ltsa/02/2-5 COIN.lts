@@ -1,0 +1,2 @@
+COIN = (toss -> tails -> COIN
+       |toss -> beads -> COIN).

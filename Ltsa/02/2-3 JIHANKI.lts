@@ -1,0 +1,2 @@
+JIHANKI = (y100 -> (y100 -> ( coffee -> JIHANKI )
+ 		 |  tea -> JIHANKI )).

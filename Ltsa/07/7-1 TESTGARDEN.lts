@@ -1,0 +1,7 @@
+TEST = TEST[0],
+TEST[v:T] = (when (v<N) {east.arrive, west.arrive}->TEST[v+1] 
+		   | end->CHECK[v]), 
+CHECK[v:T] = (display.value.read[u:T] ->　(when (u==v) right -> TEST[v]
+										 | when (u!=v) wrong -> ERROR) )  + {display.Operations}.
+||TESTGARDEN = (GARDEN || TEST).
+ 

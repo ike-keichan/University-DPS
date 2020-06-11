@@ -1,0 +1,3 @@
+property CHECK = (boke -> tsukkomi -> CHECK). 
+||CHECK_MANZAI = (MANZAI || CHECK). 
+ 

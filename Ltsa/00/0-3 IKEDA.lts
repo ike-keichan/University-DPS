@@ -1,0 +1,4 @@
+IKEDA = (sake[i : 0 .. 5] -> VALLUE[i]),
+VALLUE[v : 0 .. 5] = (when ( v <= 2 ) horoyoi -> IKEDA
+                     |when ( v > 2 ) yoi -> IKEDA).
+ 

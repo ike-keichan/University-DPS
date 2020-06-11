@@ -1,0 +1,5 @@
+BOKE = (boke -> doya -> BOKE).
+TUKKOMI = (doya -> tukkomi -> TUKKOMI).
+||MANZAI = (BOKE || TUKKOMI).
+property CHECK = (boke -> tsukkomi -> CHECK). 
+||CHECK_MANZAI = (MANZAI || CHECK).

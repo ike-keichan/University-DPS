@@ -1,0 +1,4 @@
+SWITCH = (on -> off -> SWITCH).
+|| SWITCHES (N=3) = (s[i:1 .. N]:SWITCH).
+ 
+ 

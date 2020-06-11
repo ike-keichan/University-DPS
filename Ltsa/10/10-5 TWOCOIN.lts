@@ -1,0 +1,6 @@
+TWOCOIN = (pick -> COIN | pick -> CHEAT),
+CHEAT = (toss -> heads -> CHEAT),
+COIN = (toss -> heads -> COIN | toss -> tails -> COIN).
+progress HEADS = { heads } 
+progress TAILS = { tails }
+ 

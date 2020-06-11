@@ -1,0 +1,2 @@
+TRAFFICLIGHT = (yellow -> (red -> (green -> TRAFFICLIGHT))).
+ 

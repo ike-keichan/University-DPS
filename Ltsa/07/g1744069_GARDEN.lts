@@ -1,0 +1,13 @@
+const N = 4
+range T = 0..N
+set Operations = { value.{read[T],write[T]} } 
+COUNTER = COUNTER[0],
+COUNTER[u:T] = (read[u] -> COUNTER[u] 
+               | write[v:T] -> COUNTER[v]).
+TURNSTILE = (start -> RUN),
+RUN = (arrive -> INCREMENT 
+      | end -> TURNSTILE), 
+INCREMENT = (value.read[x:T] -> value.write[x + 1] -> RUN) + Operations. 
+||GARDEN = (east:TURNSTILE 
+           || west:TURNSTILE 
+           || {east,west,display}::value:COUNTER) /{start/{east,west}.start, end/{east,west}.end}.

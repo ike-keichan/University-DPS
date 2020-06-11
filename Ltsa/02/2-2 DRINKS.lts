@@ -1,0 +1,4 @@
+DRINKS = (red -> coffee -> DRINKS
+		| blue -> tea -> DRINKS 
+		| green -> cola -> DRINKS
+ 		| yellow -> DRINKS ).

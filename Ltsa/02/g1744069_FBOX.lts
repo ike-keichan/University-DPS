@@ -1,0 +1,4 @@
+FBOX = (input[i : 0 .. 5] -> VALLUE[i]),
+VALLUE[v : 0 .. 5] = (when ( v <= 2 ) output[v] -> FBOX
+                     |when ( v > 2 ) dump -> FBOX).
+ 
